@@ -1,23 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { LoaderCircle, ArrowUp } from "lucide-react";
+import { LoaderCircle, ArrowUp, AlignJustify, SquarePen } from "lucide-react";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+
+type Conversation = { type: string; text: string }[];
 
 export default function Home() {
   const [message, setMessage] = useState("");
-  const [conversation, setConversation] = useState<
-    { type: string; text: string }[]
-  >([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [history, setHistory] = useState<Conversation[]>([[]]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const send = async () => {
     setIsLoading(true);
+    const currentConversation = history[currentIndex];
     const temporalMessage = message;
     const newConversation = [
-      ...conversation,
+      ...currentConversation,
       { type: "user", text: temporalMessage },
     ];
-    setConversation(newConversation);
+    const historiesCopyOne = [...history];
+    historiesCopyOne[currentIndex] = newConversation;
+    setHistory(historiesCopyOne);
     setMessage("");
     const response = await fetch(
       "/api/chat?query=" + temporalMessage + "&email=auroracandamil",
@@ -32,21 +37,30 @@ export default function Home() {
       { type: "bot", text: json.answer },
     ];
     setIsLoading(false);
-    setConversation(updatedConversation);
+    const historiesCopy = [...history];
+    historiesCopy[currentIndex] = updatedConversation;
+    setHistory(historiesCopy);
   };
   return (
     <div className="flex flex-col w-screen h-screen bg-slate-100 dark:bg-slate-950 items-center">
       <div className="flex-none p-4 font-bold shadow  w-full">
-        <div className="flex justify-center align-middle">
+        <div className="flex justify-between items-center px-8 ">
+          <div />
           <img
             src="https://framerusercontent.com/images/QkIRNQNrgeQBQ84TUFiTmH2vpo.png"
             alt="Voltquant Logo"
             className="dark:invert h-20"
           />
+          <PopOver
+            history={history}
+            setCurrentIndex={setCurrentIndex}
+            setHistory={setHistory}
+            currentIndex={currentIndex}
+          />
         </div>
       </div>
       <div className=" flex-1 p-4 overflow-auto dark:bg-slate-950  max-w-3xl w-full">
-        {conversation.map((entry, index) => (
+        {history[currentIndex].map((entry, index) => (
           <div
             key={index}
             className={`mb-4 p-4 rounded-t-lg shadow relative max-w-md w-fit ${
@@ -80,5 +94,57 @@ export default function Home() {
         </div>
       </div>
     </div>
+  );
+}
+
+type Props = {
+  history: Conversation[];
+  currentIndex: number;
+  setCurrentIndex: (currentIndex: number) => void;
+  setHistory: (history: Conversation[]) => void;
+};
+function PopOver(props: Props) {
+  return (
+    <Popover className="h-fit">
+      <PopoverButton className="focus:outline-none">
+        <AlignJustify className="text-black  dark:text-white" />
+      </PopoverButton>
+      <PopoverPanel
+        transition
+        anchor="bottom end"
+        className="p-4 divide-black rounded-xl bg-white text-sm/6 transition duration-200 ease-in-out data-[closed]:-translate-y-1 data-[closed]:opacity-0 w-56 dark:bg-black dark:text-white"
+      >
+        <ul className="space-y-2">
+          {props.history.map((item, index) => (
+            <li
+              key={index}
+              className={`block rounded-lg py-2 px-3 transition hover:bg-slate-300 dark:hover:bg-slate-800 ${
+                index === props.currentIndex
+                  ? "bg-slate-200 font-bold dark:bg-slate-700"
+                  : ""
+              }`}
+              onClick={() => props.setCurrentIndex(index)}
+            >
+              {item[0] == undefined
+                ? "empty..."
+                : item[0].text.slice(0, 20) + "..."}
+            </li>
+          ))}
+        </ul>
+        <button
+          className="flex w-full gap-2 rounded-lg my-2 py-2 px-3 transition hover:bg-slate-300 dark:hover:bg-slate-800"
+          onClick={() => {
+            const newIndex = props.history.length;
+            const newHistory = [...props.history, []];
+            props.setHistory(newHistory);
+            props.setCurrentIndex(newIndex);
+          }}
+          //disabled={props.history[props.history.length - 1][0] == undefined}
+        >
+          <SquarePen className="w-4" />
+          New chat
+        </button>
+      </PopoverPanel>
+    </Popover>
   );
 }
