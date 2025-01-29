@@ -87,10 +87,13 @@ export default function Home() {
             value={message}
             className="flex-1 px-3 rounded !outline-none bg-transparent"
           ></input>
-          <ArrowUp
-            className="p-1 rounded-full hover:bg-slate-800 bg-slate-700 text-white dark:bg-white dark:text-black w-7 h-7"
+          <button
+            className="p-1 rounded-full hover:bg-slate-800 bg-slate-700 text-white dark:bg-white dark:text-black w-8 h-8"
             onClick={() => send()}
-          />
+            disabled={isLoading}
+          >
+            <ArrowUp />
+          </button>
         </div>
       </div>
     </div>
