@@ -44,7 +44,6 @@ export default function PopOver(props: Props) {
             props.setHistory(newHistory);
             props.setCurrentIndex(newIndex);
           }}
-          //disabled={props.history[props.history.length - 1][0] == undefined}
         >
           <SquarePen className="w-4" />
           New chat
