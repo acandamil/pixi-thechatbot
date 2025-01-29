@@ -2,15 +2,14 @@
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
-npm install
-npm run dev
-```
 Create a file call .env with and insert the API KEY:
 ```bash
 X_API_KEY= "INSERT THE API KEY"
+```
+Run the development server:
+```bash
+npm install
+npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
