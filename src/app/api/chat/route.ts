@@ -3,9 +3,9 @@ import { type NextRequest } from "next/server";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 const apiKey = process.env.X_API_KEY;
-assert(apiKey !== undefined);
 
 export async function POST(request: NextRequest) {
+  assert(apiKey !== undefined);
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get("query");
   const email = searchParams.get("email");
