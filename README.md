@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Test - Voltquant
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
+Create a file call .env with and insert the API KEY:
+```bash
+X_API_KEY= "INSERT THE API KEY"
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How the task was made
+- The app state is managed using React state, handling loading, messages, chat history, and conversation index.
+- The design is inspired by ChatGPT's interface.
+- Dark mode has been implemented to improve user experience in low-light environments.
+- The chat interface is fully responsive, ensuring a smooth experience across different screen sizes.
+- Headless UI has been added to manage the Popover component.
+- A separate ChatMenu component has been created to manage the menu that contains the chat history, improving code organization and reusability.
+  
+### Technology stack:
+1. React
+2. Next JS
+3. TailwindCSS
+4. Lucide React for icons
+5. Fetch API for data fetching
+6. HeadlessUi for PopOver component
+### Preview
+  ![Captura de pantalla 2025-01-29 a las 15 15 21](https://github.com/user-attachments/assets/2169d18b-7897-4863-818d-682c1b2b5320)
+  ![Captura de pantalla 2025-01-29 a las 15 13 55](https://github.com/user-attachments/assets/1f4124a9-d8d3-4ea1-90b6-1e98d0a38512)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Assumptions
+- The chat operates in-memory, meaning messages are lost when the page is refreshed.
+- The chat history panel also resets upon page refresh.
+- A dedicated API route has been created to handle requests and forward them directly to the external API.
