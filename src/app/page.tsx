@@ -2,22 +2,27 @@
 
 import { useState } from "react";
 import { LoaderCircle, ArrowUp } from "lucide-react";
+import ChatMenu from "@/components/ChatMenu";
+
+export type Conversation = { type: string; text: string }[];
 
 export default function Home() {
   const [message, setMessage] = useState("");
-  const [conversation, setConversation] = useState<
-    { type: string; text: string }[]
-  >([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [history, setHistory] = useState<Conversation[]>([[]]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const send = async () => {
     setIsLoading(true);
+    const currentConversation = history[currentIndex];
     const temporalMessage = message;
     const newConversation = [
-      ...conversation,
+      ...currentConversation,
       { type: "user", text: temporalMessage },
     ];
-    setConversation(newConversation);
+    const historiesCopyOne = [...history];
+    historiesCopyOne[currentIndex] = newConversation;
+    setHistory(historiesCopyOne);
     setMessage("");
     const response = await fetch(
       "/api/chat?query=" + temporalMessage + "&email=auroracandamil",
@@ -32,21 +37,30 @@ export default function Home() {
       { type: "bot", text: json.answer },
     ];
     setIsLoading(false);
-    setConversation(updatedConversation);
+    const historiesCopyTwo = [...history];
+    historiesCopyTwo[currentIndex] = updatedConversation;
+    setHistory(historiesCopyTwo);
   };
   return (
     <div className="flex flex-col w-screen h-screen bg-slate-100 dark:bg-slate-950 items-center">
       <div className="flex-none p-4 font-bold shadow  w-full">
-        <div className="flex justify-center align-middle">
+        <div className="flex justify-between items-center px-8 ">
+          <div />
           <img
             src="https://framerusercontent.com/images/QkIRNQNrgeQBQ84TUFiTmH2vpo.png"
             alt="Voltquant Logo"
             className="dark:invert h-20"
           />
+          <ChatMenu
+            history={history}
+            setCurrentIndex={setCurrentIndex}
+            setHistory={setHistory}
+            currentIndex={currentIndex}
+          />
         </div>
       </div>
-      <div className=" flex-1 p-4 overflow-auto dark:bg-slate-950  max-w-3xl w-full">
-        {conversation.map((entry, index) => (
+      <div className=" flex-1 p-4 overflow-auto dark:bg-slate-950 max-w-3xl w-full">
+        {history[currentIndex].map((entry, index) => (
           <div
             key={index}
             className={`mb-4 p-4 rounded-t-lg shadow relative max-w-md w-fit ${
@@ -73,10 +87,13 @@ export default function Home() {
             value={message}
             className="flex-1 px-3 rounded !outline-none bg-transparent"
           ></input>
-          <ArrowUp
-            className="p-1 rounded-full hover:bg-slate-800 bg-slate-700 text-white dark:bg-white dark:text-black w-7 h-7"
+          <button
+            className="p-1 rounded-full hover:bg-slate-800 bg-slate-700 text-white dark:bg-white dark:text-black w-8 h-8"
             onClick={() => send()}
-          />
+            disabled={isLoading}
+          >
+            <ArrowUp />
+          </button>
         </div>
       </div>
     </div>
