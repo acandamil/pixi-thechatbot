@@ -37,9 +37,9 @@ export default function Home() {
       { type: "bot", text: json.answer },
     ];
     setIsLoading(false);
-    const historiesCopy = [...history];
-    historiesCopy[currentIndex] = updatedConversation;
-    setHistory(historiesCopy);
+    const historiesCopyTwo = [...history];
+    historiesCopyTwo[currentIndex] = updatedConversation;
+    setHistory(historiesCopyTwo);
   };
   return (
     <div className="flex flex-col w-screen h-screen bg-slate-100 dark:bg-slate-950 items-center">
@@ -59,7 +59,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className=" flex-1 p-4 overflow-auto dark:bg-slate-950  max-w-3xl w-full">
+      <div className=" flex-1 p-4 overflow-auto dark:bg-slate-950 max-w-3xl w-full">
         {history[currentIndex].map((entry, index) => (
           <div
             key={index}
