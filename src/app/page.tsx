@@ -43,6 +43,7 @@ export default function Home() {
     setHistory(historiesCopyTwo);
   };
 
+  //TO-DO change method dark mode: https://www.npmjs.com/package/use-dark-mode
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme === "dark") {
