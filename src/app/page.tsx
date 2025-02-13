@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { LoaderCircle, ArrowUp, Moon, Bot, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { LoaderCircle, ArrowUp, Moon, Bot } from "lucide-react";
 import ChatMenu from "@/components/ChatMenu";
 
 export type Conversation = { type: string; text: string }[];
@@ -42,11 +42,31 @@ export default function Home() {
     historiesCopyTwo[currentIndex] = updatedConversation;
     setHistory(historiesCopyTwo);
   };
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (document.documentElement.classList.contains("dark")) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+  };
+
   return (
     <div className="flex flex-col w-screen h-screen bg-slate-100 dark:bg-slate-950 items-center">
       <div className="flex-none p-4 font-bold shadow  w-full">
         <div className="flex justify-between items-center px-2 py-2">
-          <Moon className="dark:text-white" />
+          <button onClick={toggleTheme}>
+            <Moon className="dark:text-white" />{" "}
+          </button>
           <div className="flex justify-between items-center gap-1">
             <Bot className="text-purple-700 w-6 h-6 dark:text-purple-200" />
             <h1 className="text-purple-700 dark:text-purple-200 relative top-[2px]">
