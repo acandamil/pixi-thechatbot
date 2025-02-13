@@ -1,10 +1,11 @@
-# Test
+# 🤖Pixi the Chat Bot
+Hi! I'm Pixie, your super smart chatbot powered by OpenAI! I'm here to chat, help, and sprinkle a little bit of magic into your conversations.
 
-## Getting Started
+## 👋🏻 Getting Started
 
 Create a file called .env and insert the API KEY:
 ```bash
-X_API_KEY= "INSERT THE API KEY"
+OPENAI_API_KEY= "INSERT THE API KEY"
 ```
 Run the development server:
 ```bash
@@ -12,27 +13,22 @@ npm install
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## How the task was made
-- All the app state is managed using React state, handling loading, messages, chat history, and conversation index.
-- The design is inspired by ChatGPT's interface.
-- Dark mode has been implemented to improve user experience in low-light environments.
-- The chat interface is fully responsive, ensuring a smooth experience across different screen sizes.
-- A separate ChatMenu component has been created to manage the menu that contains the chat history, improving code organization and reusability.
-- A dedicated API route has been created to handle requests and forward them directly to the external API. (It was made before the API was fixed, as a workaround)
-  
-### Technology stack:
+### 👩🏼‍💻Technology stack:
 1. React
 2. Next JS
 3. TailwindCSS
 4. Lucide React for icons
 5. HeadlessUi for the Popover component
-### Preview
-  ![Captura de pantalla 2025-01-29 a las 15 15 21](https://github.com/user-attachments/assets/2169d18b-7897-4863-818d-682c1b2b5320)
-  ![Captura de pantalla 2025-01-29 a las 15 13 55](https://github.com/user-attachments/assets/1f4124a9-d8d3-4ea1-90b6-1e98d0a38512)
+6. OpenAI API
 
+### 👁️ Preview
+![Captura de pantalla 2025-02-13 a las 16 01 03](https://github.com/user-attachments/assets/3b659590-d42c-467f-b98c-e44b29394f1f)
 
-## Assumptions
-- The chat operates in-memory, meaning messages are lost when the page is refreshed.
-- The chat history panel also resets upon page refresh.
+## How Pixi was made
+- All the app state is managed using React state, handling loading, messages, chat history, and conversation index.
+- The design is inspired by ChatGPT's interface.
+- Dark mode has been implemented to improve user experience in low-light environments.
+- The chat interface is fully responsive, ensuring a smooth experience across different screen sizes.
+- A separate ChatMenu component has been created to manage the menu that contains the chat history, improving code organization and reusability.
+- A dedicated API route has been created to handle requests and forward them directly to the external API. 
 
