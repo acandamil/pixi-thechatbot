@@ -25,13 +25,10 @@ export default function Home() {
     setHistory(historiesCopyOne);
     setMessage("");
 
-    const response = await fetch(
-      "/api/chat?query=" + temporalMessage + "&email=auroracandamil",
-      {
-        method: "POST",
-        mode: "cors",
-      }
-    );
+    const response = await fetch("/api/chat?query=" + temporalMessage, {
+      method: "POST",
+      mode: "cors",
+    });
     const json = await response.json();
     const updatedConversation = [
       ...newConversation,
