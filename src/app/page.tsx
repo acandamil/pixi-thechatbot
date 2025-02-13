@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { LoaderCircle, ArrowUp } from "lucide-react";
+import { LoaderCircle, ArrowUp, Moon, Bot, MessageCircle } from "lucide-react";
 import ChatMenu from "@/components/ChatMenu";
 
 export type Conversation = { type: string; text: string }[];
@@ -24,6 +24,7 @@ export default function Home() {
     historiesCopyOne[currentIndex] = newConversation;
     setHistory(historiesCopyOne);
     setMessage("");
+
     const response = await fetch(
       "/api/chat?query=" + temporalMessage + "&email=auroracandamil",
       {
@@ -44,13 +45,14 @@ export default function Home() {
   return (
     <div className="flex flex-col w-screen h-screen bg-slate-100 dark:bg-slate-950 items-center">
       <div className="flex-none p-4 font-bold shadow  w-full">
-        <div className="flex justify-between items-center px-8 ">
-          <div />
-          <img
-            src="https://framerusercontent.com/images/QkIRNQNrgeQBQ84TUFiTmH2vpo.png"
-            alt="Voltquant Logo"
-            className="dark:invert h-20"
-          />
+        <div className="flex justify-between items-center px-2 py-2">
+          <Moon className="dark:text-white" />
+          <div className="flex justify-between items-center gap-1">
+            <Bot className="text-purple-700 w-6 h-6 dark:text-purple-200" />
+            <h1 className="text-purple-700 dark:text-purple-200 relative top-[2px]">
+              PIXI
+            </h1>
+          </div>
           <ChatMenu
             history={history}
             setCurrentIndex={setCurrentIndex}
@@ -88,9 +90,9 @@ export default function Home() {
             className="flex-1 px-3 rounded !outline-none bg-transparent"
           ></input>
           <button
-            className="p-1 rounded-full hover:bg-slate-800 bg-slate-700 text-white dark:bg-white dark:text-black w-8 h-8"
+            className="p-1 rounded-full hover:bg-slate-800 bg-slate-700 text-white dark:bg-white dark:text-black w-8 h-8 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => send()}
-            disabled={isLoading}
+            disabled={!message.trim() || isLoading}
           >
             <ArrowUp />
           </button>

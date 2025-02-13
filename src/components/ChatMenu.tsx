@@ -11,7 +11,7 @@ type Props = {
 export default function PopOver(props: Props) {
   return (
     <Popover className="h-fit">
-      <PopoverButton className="focus:outline-none">
+      <PopoverButton className="focus:outline-none flex items-center">
         <AlignJustify className="text-black  dark:text-white" />
       </PopoverButton>
       <PopoverPanel
